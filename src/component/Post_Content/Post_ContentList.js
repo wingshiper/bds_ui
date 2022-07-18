@@ -1,110 +1,98 @@
 import React from 'react';
-import {  Layout, Input, Table } from 'antd';
-import { columns } from './model/Post_Content.model'
+import { Layout, Space, Button, Table } from 'antd';
+import { Post_Content_Service } from './service/Post_Content.Service';
+import jsonQuery from 'json-query'
 // Khai báo component 
 import Slidebar from '../../common/Slidebar'
-console.log(columns)
+import { columns } from './model/Post_Content.model'
+import 'draft-js/dist/Draft.css';
 const { Header, Content, Sider } = Layout;
-const { TextArea } = Input;
 class PostContent extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            Post_Title : '',
-            Post_Content: '',
-            Post_Image: '',
+            dataSource: []
         }
-        this.onNameChange=this.onNameChange.bind(this);
-        this.onPhoneNumberChange=this.onPhoneNumberChange.bind(this);
-        this.onAddressesChange=this.onAddressesChange.bind(this);
-        this.onTypeChange=this.onTypeChange.bind(this);
-        this.onBranchChange=this.onBranchChange.bind(this);
-        this.onEmailChange=this.onEmailChange.bind(this);
-        this.onDescriptionChange=this.onDescriptionChange.bind(this);
-        this.handleOk=this.handleOk.bind(this);
+    }
 
+    handleAfterSearch() {
+        const searchModel = this.state ? this.state.searchModel : {}
+        Promise.all([Post_Content_Service.search(searchModel)])
+            .then(result => {
+                // TO DO
+            })
+    }
 
+    handleAdd(){
+        window.location.assign('http://localhost:3000/Post_ContentAdd')
+    }
+
+    handleConfirmDelte() {
 
     }
 
-    
-    handleOk() {
-        const selectModel = {
-            Conpany_Name : this.state.Company_Name,
-            Company_Address: this.state.Company_Address,
-            Company_Email: this.state.Company_Email,
-            Company_PhoneNumber: this.state.Company_PhoneNumber,
-            Company_Type: this.state.Company_Type,
-            Company_Branch: this.state.Company_Branch,
-            Description: this.state.Description,
-        }
-        Promise.all([]).then(result => {
-            // To do
-        })
-    }
-    onNameChange(e) {
-        this.setState({ Conpany_Name: e.target.value });
-    }
-    onAddressesChange(e) {
-        this.setState({ Conpany_Address: e.target.value });
+    handleDelete() {
+        
     }
 
-    onPhoneNumberChange(e) {
-        this.setState({ Company_PhoneNumber: e.target.value });
-
-    }
-    onBranchChange(e) {
-        this.setState({ Company_Branch: e.target.value });
-
+    handleUpdate() {
+        window.location.assign('http://localhost:3000/Post_ContentUpdate')
     }
 
-    onTypeChange(e) {
-        this.setState({ Conpany_Type: e.target.value });
-    }
-
-    onEmailChange(e) {
-        this.setState({ Conpany_Email: e.target.value });
-
-    }
-    onDescriptionChange(e) {
-        this.setState({ Description: e.target.value });
-
-    }
     render() {
         const styleButton = {
-            marginLeft: '175px',
+            marginLeft: '185px',
             float: 'left',
             width: '100%'
         }
         const styleText = {
             height: '100px'
         }
+        const editorState = null
         return (
-        <Layout>
-            <Header className="header"></Header>
             <Layout>
-            <Sider width={200} className="site-layout-background">
-                <Slidebar />
-            </Sider>
-                <Layout
-                    style={{
-                    padding: '0 24px 24px',
-                    }}
-                >
-                    <Content
-                    className="site-layout-background"
-                    style={{
-                        padding: 24,
-                        margin: 0,
-                        minHeight: 680,
-                    }}>
-                    
-                    <Table columns={columns} />
+                <Header className="header"></Header>
+                <Layout>
+                    <Sider width={200} className="site-layout-background">
+                        <Slidebar />
+                    </Sider>
+                    <Layout
+                        style={{
+                            padding: '0 24px 24px',
+                        }}
+                    >
+                        <Content
+                            className="site-layout-background"
+                            style={{
+                                padding: 24,
+                                margin: 0,
+                                minHeight: 680,
+                            }}
+                        >
+                            <Table
+                                columns={columns}
+                            // dataSource={data}
+                            />
+                            <Space style={{ width: '100%' }}>
+                                <Button type="primary" onClick={this.handleAfterSearch} >
+                                        Tìm kiếm
+                                    </Button>
+                                <Button type="primary" onClick={this.handleAdd}>
+                                    Thêm
+                                </Button>
+                                <Button type="primary" onClick={this.handleUpdate}>
+                                    Chỉnh Sửa
+                                </Button>
+                                <Button type="primary" onClick={this.handleDelete}>
+                                    Xóa
+                                </Button>
+                                <Button type="primary" />
+                            </Space>
 
-                    </Content>
+                        </Content>
+                    </Layout>
                 </Layout>
             </Layout>
-    </Layout>
         )
     }
 }

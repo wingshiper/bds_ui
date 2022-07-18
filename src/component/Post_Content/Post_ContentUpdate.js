@@ -15,13 +15,11 @@ import Slidebar from '../../common/Slidebar'
 
 const { Header, Content, Sider } = Layout;
 
-class PostContentAdd extends Component {
+class PostContentUpdate extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
-      sub_title: "",
-      content: "",
+        dataSource: [],
       editorState: EditorState.createEmpty()
     };
     this.onTitleChange = this.onTitleChange.bind(this);
@@ -45,14 +43,14 @@ class PostContentAdd extends Component {
   handleOk(e) {
     e.preventDefault();
     const selectModel = {
-      title: this.state.title,
-      sub_title: this.state.sub_title,
-      content: this.state.content
+      title: this.state.dataSource.title,
+      sub_title: this.state.dataSource.sub_title,
+      content: this.state.dataSource.content
     }
     console.log(Post_Content_Service)
-    Promise.all([Post_Content_Service.create(selectModel)])
+    Promise.all([Post_Content_Service.update(selectModel)])
       .then(result => {
-        // TO DO
+        console.log(result)
       })
   }
 
@@ -79,7 +77,7 @@ class PostContentAdd extends Component {
   };
 
   render() {
-    const { editorState } = this.state;
+    const { editorState, dataSource } = this.state;
     const styleContent = {
       padding: 24,
       margin: 0,
@@ -115,14 +113,14 @@ class PostContentAdd extends Component {
                   label="Tiêu đề"
                   name="Tiêu đề"
                 >
-                  <Input onChange={this.onTitleChange} />
+                  <Input onChange={this.onTitleChange}  defaultValue={dataSource.title}/>
                 </Form.Item>
 
                 <Form.Item
                   label="Tiêu đề phụ"
                   name="Tiêu đề phụ"
                 >
-                  <Input onChange={this.onSubTitleChange} />
+                  <Input onChange={this.onSubTitleChange} defaultValue={dataSource.sub_title}/>
                 </Form.Item>
 
                 <Form.Item
@@ -138,6 +136,7 @@ class PostContentAdd extends Component {
                     wrapperClassName="wrapperClassName"
                     editorClassName="editorClassName"
                     onEditorStateChange={this.onEditorStateChange}
+                    defaultValue={dataSource.content}
                   />
                 </Form.Item>
                 <Form.Item>
@@ -154,4 +153,4 @@ class PostContentAdd extends Component {
     );
   }
 }
-export default PostContentAdd;
+export default PostContentUpdate;

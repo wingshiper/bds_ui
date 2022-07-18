@@ -1,12 +1,21 @@
 export const columns = [
     {
-        title: 'Post_Title',
-        dataIndex: 'Post_Title',
-        name: 'Post_Title'
+        title: 'Title',
+        dataIndex: 'Title',
+        name: 'title',
+        width: '300px'
     },
     {
-        title: 'Post_Content',
-        dataIndex: 'Post_Content',
-        name: 'Post_Content'
+        title: 'Sub Title',
+        dataIndex: 'sub_title',
+        name: 'sub_title',
+        width: '300px'
+
+    },
+    {
+        title: 'Content',
+        dataIndex: 'content',
+        name: 'content',
+        width: '600px'
     }
 ]
