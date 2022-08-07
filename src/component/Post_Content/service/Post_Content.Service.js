@@ -33,21 +33,17 @@ function update(model) {
     return fetch(`${API_URL}/api/v1/tin-tuc/update`, requestOptions).then(handleResponse);
 }
 
-function search(model) {
-    const searchModel = {
-        page: model.page ? model.page : 1,
-        limite: model.limite ? model.limite : 10
-    }
+function search(page,limit) {
     // const auth = null;
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     // headers.append('Authorization', auth);
     const requestOptions = {
         headers,
-        method: 'POST',
-        body: JSON.stringify(searchModel)
+        method: 'GET',
+        // body: JSON.stringify(model)
     };
-    return fetch(`${API_URL}/api/v1/tin-tuc`, requestOptions).then(handleResponse);
+    return fetch(`${API_URL}/api/v1/tin-tuc?/page=${page}&limit=${limit}`, requestOptions).then(handleResponse);
 }
 
 function getById() {

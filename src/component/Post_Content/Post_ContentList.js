@@ -15,11 +15,17 @@ class PostContent extends React.Component {
         }
     }
 
-    handleAfterSearch() {
-        const searchModel = this.state ? this.state.searchModel : {}
-        Promise.all([Post_Content_Service.search(searchModel)])
+    handleAfterSearch = () =>{
+        console.log(123)
+        const searchModel = {
+
+        }
+        const searchOptions = {
+
+        }
+        Promise.all([Post_Content_Service.search(1,10)])
             .then(result => {
-                // TO DO
+            console.log(result)
             })
     }
 
